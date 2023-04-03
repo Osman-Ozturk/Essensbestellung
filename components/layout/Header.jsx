@@ -8,8 +8,9 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router =useRouter()
+  /*${router.asPath === "/" ? "bg-transparent ":"bg-secondary */
   return (
-    <div className={`h-[5.5rem] ${router.asPath === "/" ? "bg-transparent ":"bg-secondary"}`}>
+    <div className={`h-[5.5rem] bg-secondary fixed top-0 left-0 right-0`}>
       <div className="container mx-auto text-white flex justify-between items-center h-full">
         <Logo />
         <nav className={`z-40 md:bg-inherit bg-secondary md:static absolute top-[88px] right-1  md:block ${!isMenuOpen && "hidden"}`}>

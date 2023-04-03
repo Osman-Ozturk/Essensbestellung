@@ -14,11 +14,12 @@ const Karussell = () => {
         height: "90vh",
         backgroundPosition: "center",
         width: "100%",
+        paddingTop:"50px"
       }}
     >
       <div  className={`${router.asPath === "/" && "-mt-[88px]"} lg:w-[40vw] md:w-[80vw] w-[90vw]`}>
 
-      <Carousel  autoplay autoplaySpeed={5000} dots dotPosition="bottom" >
+      <Carousel  autoplay autoplaySpeed={5000} dots dotPosition="bottom">
         <div className="sm:mt-40 pl-40 mt-40 text-white flex justify-start items-center h-[400px] ">
           <Title addClass="text-6xl">Fast Food Restaurant</Title>
           <p className="text-sm mt-10 mb-10">
