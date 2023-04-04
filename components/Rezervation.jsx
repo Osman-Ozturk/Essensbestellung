@@ -3,14 +3,14 @@ import Input from "./form/Input";
 import Title from "./ui/Title";
 import { Formik, useFormik } from 'formik';
 import { Button } from "antd";
-import { rezervationSchema } from "@/Schema/rezervationSchema.js";
+import { rezervationSchema } from "../Schema/rezervationSchema.js";
 
 const Reservation = () => {
   const onSubmit =async (value,actions) =>{
     await new Promise((resolve)=>setTimeout(resolve,400))
     actions.resetForm()
   }
-  const formik = useFormik({
+  const {touched,errors,values,handleBlur,handleSubmit,handleChange} = useFormik({
     initialValues:{
       fullName:"",
       phoneNumber:"",
@@ -27,24 +27,27 @@ const Reservation = () => {
       name: "fullName",
       type: "text",
       placeholder: "Ihre Full Name",
-      value:formik.values.fullName,
-      errorMessage :formik.errors.fullName
+      value:values.fullName,
+      errorMessage :errors.fullName,
+      touched:touched.fullName
     },
     {
       id: 2,
       name: "phoneNumber",
       type: "number",
       placeholder: "Ihre Telefonnummer",
-      value:formik.values.phoneNumber,
-      errorMessage:formik.errors.phoneNumber
+      value:values.phoneNumber,
+      touched:touched.phoneNumber,
+      errorMessage:errors.phoneNumber,
     },
     {
       id: 3,
       name: "email",
       type: "email",
       placeholder: "Ihre Email Address",
-      value:formik.values.email,
-      errorMessage:formik.errors.email
+      value:values.email,
+      errorMessage:errors.email,
+      touched:touched.email
 
     },
     {
@@ -52,25 +55,29 @@ const Reservation = () => {
       name: "persons",
       type: "number",
       placeholder: "Wie viele Personen?",
-      value:formik.values.persons,
-      errorMessage:formik.errors.persons
+      value:values.persons,
+      errorMessage:errors.persons,
+      touched:touched.persons
+
     },
     {
       id: 5,
       name: "date",
       type: "datetime-local",
-      value:formik.values.date,
-      errorMessage:formik.errors.date
+      value:values.date,
+      errorMessage:errors.date,
+      touched:touched.date
+
     },
   ];
   return (
     <div className="container mx-auto py-12">
       <Title addClass="text-[40px] mb-10">Einen Tisch reservieren</Title>
       <div className="flex justify-between flex-wrap gap-10">
-        <form className="lg:flex-1 w-full" onSubmit={formik.handleSubmit}>
+        <form className="lg:flex-1 w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-y-3">
           {inputs.map((input) => (
-              <Input key={input.id} {...input} onChange={formik.handleChange}/>
+              <Input key={input.id} {...input} onChange={handleChange} onBlur={handleBlur}/>
             ))}
           </div>
           <Button className="btn-primary mt-4" type="submit" onSubmit={onSubmit}>BUCHEN SIE JETZT</Button>

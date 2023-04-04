@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Home from './home/index.jsx'
 import Header from '@/components/layout/Header.jsx'
 import Karussell from '@/components/ui/Karussell.jsx'
+import Footer from '@/components/layout/Footer.jsx'
 
 export default function Index() {
   return (
@@ -21,7 +22,6 @@ export default function Index() {
         
 
       </Head>
-      <Header />
       
       <Home />
     </div>

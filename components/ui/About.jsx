@@ -10,7 +10,7 @@ const About = () => {
         <Image src={"/images/about-img.png"} alt="aboutImage"  width={400} height={200}/>
       </div>
       <div className="flex-1 text-white flex flex-col justify-center items-start gap-8 m-10" >
-        <Title>Wir sind Feane</Title>
+        <Title >Wir sind Feane</Title>
         <p className="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet labore saepe deserunt reiciendis libero, temporibus modi in laboriosam est inventore quaerat quis,</p>
 
         <div>

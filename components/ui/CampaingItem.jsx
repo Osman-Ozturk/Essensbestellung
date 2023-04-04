@@ -14,8 +14,8 @@ const CampaingItem = () => {
         />
       </div>
       <div className="flex flex-col justify-start items-center gap-4">
-        <Title>Tosty Thursday</Title>
-        <Title className="tex-3xl">20% off</Title>
+        <Title addClass={"text-white "}>Tosty Thursday</Title>
+        <Title addClass={"text-white tex-3xl"}>20% off</Title>
         <Button className="bg-primary p-4 rounded-2xl flex justify-center items-center text-white">
           Jetzt bestellen
         </Button>
