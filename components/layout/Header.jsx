@@ -32,10 +32,10 @@ const Header = () => {
           </ul>
         </nav>
         <div className="flex gap-x-4 items-center">
-          <Link href="/login">
+          <Link href="/profile">
             <FaUserAlt className="hover:text-primary transition-all" />
           </Link>
-          <Link href="#">
+          <Link href="/cart">
             <FaShoppingCart className="hover:text-primary transition-all" />
           </Link>
           <button>
