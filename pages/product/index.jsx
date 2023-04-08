@@ -2,8 +2,12 @@ import Image from "next/image";
 import React from "react";
 import Title from "../../components/ui/Title";
 import {useState} from "react"
+import { useDispatch, useSelector} from "react-redux";
+import { addProduct } from "@/redux/cartSlice.js";
 
 const Index = () => {
+  const cart = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
   const [prices, setPrices] = useState([10,20,30])
   const [price, setPrice] = useState(prices[0])
   const [size, setSize] = useState(0)
@@ -25,6 +29,24 @@ const Index = () => {
     },
   ])
   const [extras, setExtras] = useState([]);
+  const foodItems = [
+    {
+      id: 1,
+      name: "Pizza 1",
+      price: 10,
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fugit corporis ex laboriosam tenetur at ad aspernatur",
+      extraOptions: [
+        {
+          id: 1,
+          name: "Extra 1",
+          price: 1,
+        },
+      ],
+    },
+  ];
+  const handleClick = () => {
+    dispatch(addProduct({ ...foodItems[0], extras, price, quantity: 1 }));
+  };
 
   const handleSize = (sizeIndex)=>{
     const difference = prices[sizeIndex] - prices[size]
@@ -43,7 +65,7 @@ const Index = () => {
       setExtras(filtered)
     }
   }
-  console.log(extras);
+  console.log(cart);
   return (
     <div className="flex items-center md:h-screen gap-5 py-20 flex-wrap ">
       <div className="relative md:flex-1 md:w-[80%] w-36 md:h-[calc(100vh_-_88px)] h-36 mx-auto ">
@@ -92,7 +114,7 @@ const Index = () => {
           ))}
           
         </div>
-        <button className="btn-primary">Add to Cart</button>
+        <button className="btn-primary" onClick={handleClick}>in den Warenkorb legen</button>
       </div>
     </div>
   );

@@ -5,7 +5,9 @@ import { MenuUnfoldOutlined,CloseOutlined} from "@ant-design/icons";
 import {useState} from "react"
 import { useRouter } from "next/router.js";
 import Link from "next/link.js";
+import { useSelector } from "react-redux";
 const Header = () => {
+  const cart = useSelector((state) => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router =useRouter()
@@ -36,7 +38,12 @@ const Header = () => {
             <FaUserAlt className="hover:text-primary transition-all" />
           </Link>
           <Link href="/cart">
-            <FaShoppingCart className="hover:text-primary transition-all" />
+           
+            <span className="relative"> <FaShoppingCart className="hover:text-primary transition-all" />
+          <span className="w-4 h-4 text-xs grid place-content-center rounded-full bg-primary absolute -top-2 -right-3 text-black font-bold">
+                {cart.products.length === 0 ? "0" : cart.products.length}
+              </span>
+              </span>
           </Link>
           <button>
   <FaSearch
