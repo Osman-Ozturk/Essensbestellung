@@ -5,6 +5,7 @@ import MenuWrapper from '@/components/product/MenuWrapper.jsx'
 import About from '@/components/ui/About.jsx'
 import Reservation from '@/components/Rezervation.jsx'
 import Customers from '@/components/customers/Customers.jsx'
+import { getSession } from 'next-auth/react'
 const Home = () => {
   return (
     <div>
@@ -17,6 +18,20 @@ const Home = () => {
        
     </div>
   )
+}
+export const getServerSideProps = async({req})=>{
+  const session = await getSession({req});
+  if (!session) {
+    return {
+      redirect:{
+        destination:"/login",
+        permanent:false
+      }
+    }    
+  }
+  return {
+    props:{}
+  }
 }
 
 export default Home

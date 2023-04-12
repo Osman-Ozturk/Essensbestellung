@@ -3,19 +3,27 @@ import Input from "../form/Input";
 import Title from "../ui/Title";
 import { useFormik } from "formik";
 import { registerSchema } from "@/Schema/registerSchema.js";
-const Password = () => {
-  const onSubmit = async (values, actions) => {
-    await new Promise((resolve) => setTimeout(resolve, 4000));
-    actions.resetForm();
+const Password = ({user}) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`,
+        values
+      );
+      actions.resetForm();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
+  const { values, errors, touched, handleChange, handleBlur } =
     useFormik({
+      enableReinitialize: true,
       initialValues: {
         password:"",
-        passwordWieder:""
+        confirmPassword:""
       },
-      onSubmit,
       validationSchema: registerSchema,
     });
   const inputs = [
@@ -30,16 +38,16 @@ const Password = () => {
     },
     {
       id: 2,
-      name: "passwordWieder",
+      name: "confirmPassword",
       type: "password",
       placeholder: "Bestätige das Passwort",
-      value: values.passwordWieder,
-      errorMessage: errors.passwordWieder,
-      touched: touched.passwordWieder,
+      value: values.confirmPassword,
+      errorMessage: errors.confirmPassword,
+      touched: touched.confirmPassword,
     }
   ];
   return (
-    <form className="lg:p-8 flex-1 lg:mt-0 mt-5">
+    <form className="lg:p-8 flex-1 lg:mt-0 mt-5" onSubmit={handleSubmit}>
       <Title addClass="text-[40px]">Password </Title>
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 mt-4">
         {inputs.map((input) => (
@@ -51,7 +59,7 @@ const Password = () => {
           />
         ))}
       </div>
-      <button className="btn-primary mt-4">Aktualizieren</button>
+      <button className="btn-primary mt-4" type="submit">Aktualizieren</button>
     </form>
   );
 };

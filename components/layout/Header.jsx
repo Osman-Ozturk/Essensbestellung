@@ -20,7 +20,7 @@ const Header = () => {
         <CloseOutlined className={`md:hidden ${!isMenuOpen && "hidden"} flex justify-end mr-2  hover:text-primary cursor-pointer`} onClick={()=>setIsMenuOpen(false)}/>
           <ul className="flex gap-x-2 md:flex-row flex-col justify-center items-center p-2 rounded">
             <li className="px-[5px] py-[10px] uppercase hover:text-primary cursor-pointer">
-              <Link href="/" className="cursor-pointer">Home</Link>
+              <Link href="/home" className="cursor-pointer">Home</Link>
             </li>
             <li className="px-[5px] py-[10px] uppercase hover:text-primary cursor-pointer">
               <Link href="/menu">Menu</Link>

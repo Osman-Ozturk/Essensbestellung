@@ -2,42 +2,56 @@ import React from "react";
 import Input from "../form/Input.jsx";
 import Title from "../ui/Title";
 import {  useFormik } from 'formik';
-import { Button } from "antd";
 import Link from "next/link.js";
 import { registerSchema } from "@/Schema/registerSchema.js";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useRouter } from 'next/router'
 const Register = () => {
-  const onSubmit = async (value, actions) => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    actions.resetForm();
+  const router =useRouter()
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
+        values
+      );
+      console.log(res);
+      if (res.status === 201) {
+        toast.success("User created successfully");
+        router.push("/login")
+      }
+    } catch (err) {
+      toast.error(err.response.data.message);
+      console.log(err);
+    }
   };
-  const { touched, errors, values, handleBlur, handleSubmit, handleChange } =
+  const { values, errors, touched, handleChange, handleBlur } =
     useFormik({
       initialValues: {
         fullName: "",
-        phoneNumber: "",
         email: "",
-        persons: "",
-        date: "",
+        password: "",
+        confirmPassword: "",
       },
-      onSubmit,
       validationSchema: registerSchema,
     });
+
   const inputs = [
     {
       id: 1,
       name: "fullName",
       type: "text",
-      placeholder: "Ihre Full Name",
+      placeholder: "Your Full Name",
       value: values.fullName,
       errorMessage: errors.fullName,
       touched: touched.fullName,
     },
-
     {
       id: 2,
       name: "email",
       type: "email",
-      placeholder: "Ihre Email Address",
+      placeholder: "Your Email Address",
       value: values.email,
       errorMessage: errors.email,
       touched: touched.email,
@@ -45,27 +59,31 @@ const Register = () => {
     {
       id: 3,
       name: "password",
-      type: "text",
-      placeholder: "Ihr Password",
+      type: "password",
+      placeholder: "Your Password",
       value: values.password,
       errorMessage: errors.password,
       touched: touched.password,
     },
     {
       id: 4,
-      name: "passwordWieder",
-      type: "text",
-      placeholder: "Ihr Bestätigungspasswort",
-      value: values.password,
-      errorMessage: errors.passwordWieder,
-      touched: touched.passwordWieder,
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "Your Password Again",
+      value: values.confirmPassword,
+      errorMessage: errors.confirmPassword,
+      touched: touched.confirmPassword,
     },
   ];
+ 
   return (
-    <div className="w-[450px] m-auto mt-28 flex flex-col justify-center items-center" >
-      <Title addClass={"text-4xl"}>Register</Title>
-      <form className="lg:flex-1 w-full mt-12" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-y-3">
+    <div className="container mx-auto">
+      <form
+        className="flex flex-col items-center my-20 md:w-1/2 w-full mx-auto"
+        onSubmit={handleSubmit}
+      >
+        <Title addClass="text-[40px] mb-6">Register</Title>
+        <div className="flex flex-col gap-y-3 w-full">
           {inputs.map((input) => (
             <Input
               key={input.id}
@@ -75,17 +93,18 @@ const Register = () => {
             />
           ))}
         </div>
-        <div className="mb-8">
-        <Button className="mb-2 w-[450px] btn-primary mt-4" type="submit" onSubmit={onSubmit}>
-          REGISTER
-        </Button>
-        
-        <Link href={"/login"} >Haben Sie schon eine Konto ?</Link>
-
+        <div className="flex flex-col w-full gap-y-3 mt-6">
+          <button className="btn-primary" type="submit">
+            REGISTER
+          </button>
+          <Link href="/login">
+            <span className="text-sm underline cursor-pointer text-secondary">
+              Haben Sie schon einen Konto?
+            </span>
+          </Link>
         </div>
       </form>
     </div>
   );
 };
-
 export default Register;

@@ -7,9 +7,27 @@ import Order from "@/components/admin/Order.jsx";
 import Products from "@/components/admin/Products.jsx";
 import Category from "@/components/admin/Category.jsx";
 import Footer from "@/components/admin/Footer.jsx";
+import axios from "axios";
+import { useRouter } from "next/router.js";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [tabs, setTabs] = useState(0);
+  const {push} =useRouter()
+  const closeAdminAccount =async ()=>{
+    try {
+      
+      if (confirm("Sind Sie sich sicher, ob Sie ihre Admin Account abmelden möchten ? ")) {
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/admin`);
+        if (res.status === 200) {
+          push("/admin")
+          toast.success("Admin Account wurde geschlossen")
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
        
   return (
     <div className="flex px-10 min-h-[calc(100vh_-_433px)] lg:flex-row flex-col">
@@ -71,7 +89,7 @@ const Profile = () => {
             onClick={() => setTabs(4)}
           >
             <i className="fa fa-sign-out"></i>
-            <button className="ml-1">Abmelden</button>
+            <button className="ml-1" onClick={closeAdminAccount}>Abmelden</button>
           </li>
         </ul>
       </div>
@@ -82,5 +100,20 @@ const Profile = () => {
     </div>
   );
 };
+export const getServerSideProps = (context)=> {
+  const myCookie =context.req?.cookies || "";
+  console.log("myCookie",myCookie);
+  if (myCookie.token !== process.env.ADMIN_TOKEN) {
+    return {
+      redirect :{
+        destination :"/admin",
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{}
+  }
+}
 
 export default Profile;

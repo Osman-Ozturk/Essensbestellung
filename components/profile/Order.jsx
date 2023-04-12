@@ -1,7 +1,7 @@
 import React from "react";
 import Title from "../ui/Title";
 
-const Order = () => {
+const Order = ({user}) => {
   return (
     <div className="lg:p-8 flex-1 lg:mt-0 mt-5">
       <Title addClass="text-[40px]">Bestellungs</Title>
