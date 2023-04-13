@@ -10,9 +10,13 @@ import Footer from "@/components/admin/Footer.jsx";
 import axios from "axios";
 import { useRouter } from "next/router.js";
 import { toast } from "react-toastify";
+import AddProduct from "@/components/admin/AddProduct.jsx";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 const Profile = () => {
   const [tabs, setTabs] = useState(0);
+  const [isProductOpen, setIsProductOpen] = useState(false);
   const {push} =useRouter()
   const closeAdminAccount =async ()=>{
     try {
@@ -30,7 +34,7 @@ const Profile = () => {
   }
        
   return (
-    <div className="flex px-10 min-h-[calc(100vh_-_433px)] lg:flex-row flex-col">
+    <div className="relativ flex px-10 min-h-[calc(100vh_-_433px)] lg:flex-row flex-col">
     <div className="lg:w-80 w-100 flex-shrink-0">
         <div className="relative flex flex-col items-center px-10 py-5 border border-b-0">
           <Image
@@ -97,6 +101,11 @@ const Profile = () => {
       {tabs === 2 && <Category />}
       {tabs === 1 && <Order />}
       {tabs === 3 && <Footer />}
+      <AddProduct isProductOpen={isProductOpen} setIsProductOpen={setIsProductOpen}/>
+      <div className="absolute top-24 right-4">
+      <Button className="bg-primary rounded-full flex justify-center items-center text-white h-[50px] shadow-lg" onClick={()=>setIsProductOpen(true)}><PlusOutlined /> Produkt hinzufügen</Button>
+
+      </div>
     </div>
   );
 };
