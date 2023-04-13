@@ -4,8 +4,9 @@ import Home from './home/index.jsx'
 import Header from '@/components/layout/Header.jsx'
 import Karussell from '@/components/ui/Karussell.jsx'
 import Footer from '@/components/layout/Footer.jsx'
+import axios from 'axios'
 
-export default function Index() {
+export default function Index({categoryList}) {
   return (
     <div className='relativ'>
       <Head>
@@ -23,7 +24,16 @@ export default function Index() {
 
       </Head>
       
-      <Home />
+      <Home categoryList={categoryList}/>
     </div>
   )
+}
+
+export const getServerSideProps=async () =>{
+  const res =await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`)
+  return {
+    props :{
+      categoryList :res.data ? res.data:[]
+    }
+  }
 }

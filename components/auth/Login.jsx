@@ -20,7 +20,6 @@ const Login = () => {
       const user = users.data.find(user => user.email === email)
       let options = {redirect:false,email,password}
       const res = await signIn("credentials",options)
-      console.log(res);
       if (res.status === 200) {
         toast.success("Login ist erfolgreich")
         push(`/profile/${user._id}`)
@@ -65,6 +64,7 @@ const Login = () => {
       signIn("github")
       push(`/`)
     }
+   
     console.log(session);
   return (
     <div className="container mx-auto">

@@ -28,7 +28,7 @@ const Profile = ({user}) => {
     <div className="lg:w-80 w-100 flex-shrink-0">
         <div className="relative flex flex-col items-center px-10 py-5 border border-b-0">
           <Image
-            src="/images/admin.png"
+            src="/images/admin.png" priority
             alt=""
             width={100}
             height={100}

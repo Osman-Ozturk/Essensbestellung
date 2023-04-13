@@ -6,12 +6,13 @@ import About from '@/components/ui/About.jsx'
 import Reservation from '@/components/Rezervation.jsx'
 import Customers from '@/components/customers/Customers.jsx'
 import { getSession } from 'next-auth/react'
-const Home = () => {
+const Home = ({categoryList}) => {
+  
   return (
     <div>
        <Karussell />
        <Campaigns />
-       <MenuWrapper />
+       <MenuWrapper  categoryList={categoryList}/>
        <About />
        <Reservation />
        <Customers />

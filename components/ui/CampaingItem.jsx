@@ -7,10 +7,11 @@ const CampaingItem = () => {
     <div className=" bg-secondary flex justify-center items-center p-4 rounded-md w-[450px]">
       <div className="border-[5px] border-primary rounded-full p-2 flex justify-center items-center">
         <Image
-          src={"/images/f1.png"}
+          src={"/images/o1.jpg"}
           alt="campaings image"
           width={150}
           height={150}
+          priority
         />
       </div>
       <div className="flex flex-col justify-start items-center gap-4">

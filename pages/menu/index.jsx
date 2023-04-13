@@ -1,25 +1,19 @@
 import MenuWrapper from '@/components/product/MenuWrapper.jsx'
 import React from 'react'
-import { getSession } from 'next-auth/react'
-const Index = () => {
+import axios from 'axios'
+const Index = ({categoryList}) => {
   return (
     <div className='mt-40'>
-      <MenuWrapper />
+       <MenuWrapper categoryList={categoryList} />
     </div>
   )
 }
-export const getServerSideProps = async({req})=>{
-  const session = await getSession({req});
-  if (!session) {
-    return {
-      redirect:{
-        destination:"/login",
-        permanent:false
-      }
-    }    
-  }
+export const getServerSideProps = async () => {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
   return {
-    props:{}
-  }
+    props: {
+      categoryList: res.data ? res.data : [],
+    },
+  };
 }
 export default Index
