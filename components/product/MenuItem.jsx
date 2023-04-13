@@ -7,7 +7,7 @@ const MenuItem = () => {
     <div className='bg-secondary w-80 rounded-md'>
       <Link href={"/product"}>
       <div className='bg-white flex justify-center items-center border rounded-b-3xl p-2 hover:scale-110 transition-all'>
-        <Image src="/images/f1.png" alt="Image" width={250} height={150}/>
+        <Image src="/images/f1.png" alt="Image" width={250} height={150} priority/>
       </div>
       </Link>
       <div className='text-white p-6 flex flex-col justify-center items-start gap-2'>
