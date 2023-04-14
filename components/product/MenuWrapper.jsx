@@ -1,9 +1,20 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Title from '../ui/Title.jsx'
 import MenuItem from './MenuItem.jsx'
 
-const MenuWrapper = ({categoryList}) => {
+const MenuWrapper = ({ categoryList, productList }) => {
   const [active, setActive] = useState(0);
+  const [filter, setFilter] = useState([]);
+  const [productLimit, setProductLimit] = useState(3);
+
+  useEffect(() => {
+    setFilter(
+      productList?.filter(
+        (product) =>
+          product.category === categoryList[active].title.toLowerCase()
+      )
+    );
+  }, [categoryList, productList, active]);
   return (
     <div className='flex flex-col justify-center items-center'>
       <Title addClass="text-black mb-10 text-[40px]" >Unser Menü</Title>
@@ -24,11 +35,10 @@ const MenuWrapper = ({categoryList}) => {
        
       </div>
       <div className=' mt-8 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10'>
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
+        {filter?.map(prd=>(
+          <MenuItem key={prd._id} prd={prd}/>
+
+        ))}
       </div>
 
     </div>

@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import Account from "../../components/profile/Account";
 import Image from "next/image";
 import Password from "@/components/profile/Password.jsx";
@@ -13,11 +12,13 @@ import { toast } from "react-toastify";
 import AddProduct from "@/components/admin/AddProduct.jsx";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { useState ,useEffect} from "react";
 
-const Profile = () => {
+const Profile = ({products}) => {
   const [tabs, setTabs] = useState(0);
   const [isProductOpen, setIsProductOpen] = useState(false);
   const {push} =useRouter()
+  
   const closeAdminAccount =async ()=>{
     try {
       
@@ -97,7 +98,7 @@ const Profile = () => {
           </li>
         </ul>
       </div>
-      {tabs === 0 && <Products />}
+      {tabs === 0 && <Products products={products}/>}
       {tabs === 2 && <Category />}
       {tabs === 1 && <Order />}
       {tabs === 3 && <Footer />}
@@ -109,9 +110,11 @@ const Profile = () => {
     </div>
   );
 };
-export const getServerSideProps = (context)=> {
+export const getServerSideProps =async (context)=> {
   const myCookie =context.req?.cookies || "";
-  console.log("myCookie",myCookie);
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/products`
+  );
   if (myCookie.token !== process.env.ADMIN_TOKEN) {
     return {
       redirect :{
@@ -121,8 +124,11 @@ export const getServerSideProps = (context)=> {
     }
   }
   return {
-    props:{}
-  }
+    props: {
+      products: res.data ? res.data : [],
+    },
+  };
 }
+
 
 export default Profile;

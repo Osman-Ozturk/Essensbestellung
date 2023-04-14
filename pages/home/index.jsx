@@ -5,14 +5,14 @@ import MenuWrapper from '@/components/product/MenuWrapper.jsx'
 import About from '@/components/ui/About.jsx'
 import Reservation from '@/components/Rezervation.jsx'
 import Customers from '@/components/customers/Customers.jsx'
-import { getSession } from 'next-auth/react'
-const Home = ({categoryList}) => {
+import axios from 'axios'
+const Home = ({categoryList,productList}) => {
   
   return (
     <div>
        <Karussell />
        <Campaigns />
-       <MenuWrapper  categoryList={categoryList}/>
+       <MenuWrapper  categoryList={categoryList} productList={productList}/>
        <About />
        <Reservation />
        <Customers />
@@ -20,19 +20,15 @@ const Home = ({categoryList}) => {
     </div>
   )
 }
-export const getServerSideProps = async({req})=>{
-  const session = await getSession({req});
-  if (!session) {
-    return {
-      redirect:{
-        destination:"/login",
-        permanent:false
-      }
-    }    
-  }
+export const getServerSideProps = async () => {
+  const product = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+  const categories = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
   return {
-    props:{}
-  }
+    props: {
+      productList: product.data ? product.data : [],
+      categoryList: categories.data ? categories.data : [],
+    },
+  };
 }
 
 export default Home

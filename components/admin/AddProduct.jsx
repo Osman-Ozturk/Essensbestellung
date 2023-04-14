@@ -47,7 +47,7 @@ const AddProduct = ({ isProductOpen, setIsProductOpen }) => {
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
-    console.log(imageSrc);
+    
   };
   const handleCreate = async () => {
     const data = new FormData();
@@ -146,7 +146,7 @@ const AddProduct = ({ isProductOpen, setIsProductOpen }) => {
             ))}
         </select>
       </div>
-      {category === "pizza" ? (
+      {category.toLowerCase() === "pizza" ? (
         <div className="flex flex-col text-sm mt-4 w-full">
           <span className="font-semibold mb-[2px]">Preise</span>
           <div className="flex justify-between gap-6 w-full md:flex-nowrap flex-wrap">
@@ -166,7 +166,7 @@ const AddProduct = ({ isProductOpen, setIsProductOpen }) => {
               type="number"
               className="border-b-2 p-1 pl-0 text-sm px-1 outline-none w-36"
               placeholder="gross"
-              onChange={(e) => changePrice(e, 3)}
+              onChange={(e) => changePrice(e, 2)}
             />
           </div>
         </div>
@@ -178,6 +178,7 @@ const AddProduct = ({ isProductOpen, setIsProductOpen }) => {
               type="number"
               className="border-b-2 p-1 pl-0 text-sm px-1 outline-none w-36"
               placeholder="klein"
+              onChange={(e) => setPrices(e.target.value)}
             />
           </div>
         </div>

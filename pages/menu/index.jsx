@@ -1,18 +1,20 @@
 import MenuWrapper from '@/components/product/MenuWrapper.jsx'
 import React from 'react'
 import axios from 'axios'
-const Index = ({categoryList}) => {
+const Index = ({categoryList,productList}) => {
   return (
     <div className='mt-40'>
-       <MenuWrapper categoryList={categoryList} />
+       <MenuWrapper categoryList={categoryList} productList={productList}/>
     </div>
   )
 }
 export const getServerSideProps = async () => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
+  const category = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
+  const product = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
   return {
     props: {
-      categoryList: res.data ? res.data : [],
+      categoryList: category.data ? category.data : [],
+      productList: product.data ? product.data : [],
     },
   };
 }

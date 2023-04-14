@@ -12,8 +12,8 @@ const Cart = () => {
   const columns = [
     {
       title: "PRODUKT",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "title",
+      key: "title",
       render:(text)=>(
         <div className="flex gap-2">
         <Image src={"/images/f1.png"} alt="cartImage" width={30} height={30}/>
@@ -26,7 +26,7 @@ const Cart = () => {
       dataIndex: "extras",
       key: "extras",
       render:(text)=>{
-        return <p>{text.map(a=>a.name)+","}</p>
+        return <p>{text.map(a=>a.text)+" "}</p>
         
       }
     },
